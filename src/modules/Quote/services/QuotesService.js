@@ -10,7 +10,6 @@ export default {
       format: 'json-cors',
       key: apiKey
     }});
-      console.log(response.data, 'RESPONSE');
       return response.data
     } catch (error) {
       console.error('There was an error fetching the data:', error);

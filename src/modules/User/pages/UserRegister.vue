@@ -23,6 +23,7 @@
 
 <script>
 import AuthService from '../services/AuthService'
+
 export default {
   data() {
     return {
@@ -38,7 +39,7 @@ export default {
         password: this.password
       }
       try {
-        const token = await AuthService.register(user)
+        await AuthService.register(user)
         alert('Usuário criado com sucesso!')
         this.redirectToLogin()
       } catch (error) {

@@ -24,9 +24,21 @@ const router = createRouter({
     {
       path: '/financial',
       name: 'financial',
-      component: FinancialInfo
+      component: FinancialInfo,
+      meta: { requiresAuth: true }
     },
   ]
 })
 
-export default router
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const isAuthenticated = localStorage.getItem('userToken');
+
+  if (requiresAuth && !isAuthenticated) {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+export default router;

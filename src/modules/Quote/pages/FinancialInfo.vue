@@ -1,8 +1,24 @@
 <template>
   <div class="data-container">
+    <header class="page-header">
+      <div class="logo-container">
+        <img src="@/assets/logo.png" alt="Logo" class="logo" />
+      </div>
+      <div class="logout-button-container">
+        <button @click="logout" class="logout-button">Logout</button>
+      </div>
+    </header>
     <section class="currency-section">
-      <h2>Currencies</h2>
-      <div v-for="(currency, key) in data.results.currencies" :key="key" class="currency-item">
+      <h2>Moedas</h2>
+      <div
+        v-for="(currency, key) in data.results.currencies"
+        :key="key"
+        :class="{
+          positive: currency.variation > 0,
+          negative: currency.variation < 0
+        }"
+        class="currency-item"
+      >
         <h3>{{ key }} - {{ currency.name }}</h3>
         <p class="buy">Buy: {{ currency.buy }}</p>
         <p class="sell">Sell: {{ currency.sell }}</p>
@@ -11,8 +27,16 @@
     </section>
 
     <section class="stock-section">
-      <h2>Stocks</h2>
-      <div v-for="(stock, key) in data.results.stocks" :key="key" class="stock-item">
+      <h2>Ações</h2>
+      <div
+        v-for="(stock, key) in data.results.stocks"
+        :key="key"
+        :class="{
+          positive: stock.variation > 0,
+          negative: stock.variation < 0
+        }"
+        class="stock-item"
+      >
         <h3>{{ key }} - {{ stock.name }}</h3>
         <p class="location">Location: {{ stock.location }}</p>
         <p class="points">Points: {{ stock.points }}</p>
@@ -23,7 +47,7 @@
 </template>
 
 <script>
-import QuotesService from '../services/QuotesService';
+import QuotesService from '../services/QuotesService'
 
 export default {
   name: 'FinancialInfo',
@@ -37,55 +61,124 @@ export default {
       }
     }
   },
+  methods: {
+    logout() {
+      localStorage.removeItem('userToken')
+      this.$router.push('/login')
+    }
+  },
   async mounted() {
-    this.data  = await QuotesService.fetchData();
+    this.data = await QuotesService.fetchData()
   }
 }
 </script>
 
 <style>
-  .data-container {
-    font-family: 'Arial', sans-serif;
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-  }
+:root {
+  --primary-color: #657be9;
+  --secondary-color: #131b24;
+  --positive-color: #66db99;
+  --negative-color: #a13232;
+  --background-color: #f9f9f9;
+  --text-color: #000000;
+  --border-color: #eee;
+  --button-bg-color: #dc3545;
+  --button-hover-bg-color: #c82333;
+}
 
-  .currency-section, .stock-section {
-    margin-bottom: 20px;
-  }
+body,
+html {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
 
-  h2 {
-    color: #333;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-  }
+.data-container {
+  position: relative;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  padding-top: 140px;
+}
 
-  .currency-item, .stock-item {
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
+.page-header {
+  margin: 10px;
+}
 
-  .currency-item h3, .stock-item h3 {
-    color: #007BFF;
-  }
+.logo-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
+}
 
-  .buy, .sell, .location, .points {
-    margin: 5px 0;
-  }
+.logo {
+  height: 100px;
+  width: auto;
+  border-radius: 5px;
+}
 
-  .buy {
-    color: #28a745;
-  }
+.currency-item,
+.stock-item {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: var(--background-color);
+}
 
-  .sell {
-    color: #dc3545;
-  }
+.positive {
+  background-color: var(--positive-color);
+}
 
-  .variation {
-    font-style: italic;
-  }
+.negative {
+  background-color: var(--negative-color);
+}
+
+.logout-button-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px;
+}
+
+.logout-button {
+  padding: 5px 15px;
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+.currency-section,
+.stock-section {
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: var(--secondary-color);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.buy,
+.sell,
+.location,
+.points {
+  margin: 5px 0;
+}
+
+.buy,
+.sell {
+  color: var(--secondary-color);
+}
+
+.variation {
+  font-style: italic;
+}
 </style>

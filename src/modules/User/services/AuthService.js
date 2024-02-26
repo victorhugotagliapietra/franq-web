@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://agile-chamber-90457-6d5e103cf5ca.herokuapp.com/';
 
 export default {
   async register(user) {

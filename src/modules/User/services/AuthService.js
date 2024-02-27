@@ -22,7 +22,7 @@ export default {
       return response.data;
     } catch (error) {
       console.error('There was an error fetching the data:', error);
-      return {};
+      throw error
     }
   }
 };

@@ -4,7 +4,7 @@ import UserRegister from '../modules/User/pages/UserRegister.vue'
 import FinancialInfo from '../modules/Quote/pages/FinancialInfo.vue'
 
 const router = createRouter({
-  history: createWebHistory('/'),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',

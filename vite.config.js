@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://api.hgbrasil.com',
+        target: 'https://api.hgbrasil.com/finance',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

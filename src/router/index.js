@@ -4,7 +4,7 @@ import UserRegister from '../modules/User/pages/UserRegister.vue'
 import FinancialInfo from '../modules/Quote/pages/FinancialInfo.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory('https://franq-web-2024.vercel.app/'),
   routes: [
     {
       path: '/',
